@@ -74,10 +74,22 @@ class NeuralNet(object):
 			for batch in batches:
 				self.train_batch(batch, learning_rate)
 
+			"""
+			If Test Data is provided then no of correct
+			predictions is calculated in each epoch
+			"""
+			max_correct = -1
 			if test_data:
-				print("Epoch {}: Correct = {} out of {}".format(epoch, self.predict(test_data), len_of_test))
+				correct = self.predict(test_data)
+				if correct > max_correct:
+					max_correct = correct
+				print("Epoch {}: Correct = {} / {}.".format(epoch, correct, len_of_test))
 			else:
 				print("Epoch {} completed".format(j))
+
+		# Best Accuracy of the Model
+		if test_data:
+			print("The Best Accuracy of the model is {}%.".format(correct / len_of_test * 100))
 
 
 	# Training function for each batch
