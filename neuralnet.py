@@ -53,10 +53,12 @@ class NeuralNet(object):
 	def train(self, training_set, no_of_epochs, size_of_batch, learning_rate, test_set = None):
 		
 		# Length of Test Data (Optional)
-		if test_data:
-			len_of_test = len(test_data)
+		if test_set:
+			test_set = list(test_set)
+			len_of_test = len(test_set)
 
 		# Length of the Training Set
+		training_set = list(training_set)
 		len_of_training_set = len(training_set)
 
 		# For each epoch
@@ -79,17 +81,17 @@ class NeuralNet(object):
 			predictions is calculated in each epoch
 			"""
 			max_correct = -1
-			if test_data:
-				correct = self.predict(test_data)
+			if test_set:
+				correct = self.predict(test_set)
 				if correct > max_correct:
 					max_correct = correct
 				print("Epoch {}: Correct = {} / {}.".format(epoch, correct, len_of_test))
 			else:
-				print("Epoch {} completed".format(j))
+				print("Epoch {} completed".format(epoch))
 
 		# Best Accuracy of the Model
-		if test_data:
-			print("The Best Accuracy of the model is {}%.".format(correct / len_of_test * 100))
+		if test_set:
+			print("The Best Accuracy of the model is {}%.".format(max_correct / len_of_test * 100))
 
 
 	# Training function for each batch
@@ -115,20 +117,16 @@ class NeuralNet(object):
 			delta_del_biases, delta_del_weights = self.backpropagate(X, y)
 
 			# Updating ∇biases
-			for del_bias, delta_del_bias in zip(del_biases, delta_del_biases):
-				del_bias = del_bias + delta_del_bias
+			del_bias = [del_bias + delta_del_bias for del_bias, delta_del_bias in zip(del_biases, delta_del_biases)]
 
 			# Updating ∇weights
-			for del_weight, delta_del_weight in zip(del_weights, delta_del_weights):
-				del_weight = del_weight + delta_del_weight
-
+			del_weights = [del_weight + delta_del_weight for del_weight, delta_del_weight in zip(del_weights, delta_del_weights)]
+		
 		# Updating values of Biases
-		for bias, del_bias in zip(self.biases, del_biases):
-			bias = bias - ((learning_rate * del_bias) / len_of_batch)
+		self.biases = [bias - ((learning_rate * del_bias) / len_of_batch) for bias, del_bias in zip(self.biases, del_biases)]
 		
 		# Updating values of Weights
-		for weight, del_weight in zip(self.weights, del_weights):
-			weight = weight - ((learning_rate * del_weight) / len_of_batch)
+		self.weights = [weight - ((learning_rate * del_weight) / len_of_batch) for weight, del_weight in zip(self.weights, del_weights)]
 
 
 	# Function for backpropagation
@@ -172,7 +170,7 @@ class NeuralNet(object):
 			z = list_of_z[-layer]
 			delta = np.dot(self.weights[-layer + 1].transpose(), delta) * derivative_of_sigmoid(z)
 			del_biases[-layer] = delta
-			del_weights[-layer] = np.dot(delta, list_of_activations[-layer + 1].transpose())
+			del_weights[-layer] = np.dot(delta, list_of_activations[-layer - 1].transpose())
 
 		# Return the final values of ∇biases and ∇weights as a tuple
 		return (del_biases, del_weights)
