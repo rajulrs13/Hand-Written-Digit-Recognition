@@ -61,6 +61,10 @@ class NeuralNet(object):
 		training_set = list(training_set)
 		len_of_training_set = len(training_set)
 
+		# Initialisation for best weights and biases in case of test set
+		max_biases = []
+		max_weights = []
+
 		# For each epoch
 		for epoch in range(no_of_epochs):
 
@@ -85,12 +89,16 @@ class NeuralNet(object):
 				correct = self.predict(test_set)
 				if correct > max_correct:
 					max_correct = correct
-				print("Epoch {}: Correct = {} / {}.".format(epoch, correct, len_of_test))
+					max_biases = self.biases
+					max_weights = self.weights
+				print("Epoch {}: Correct = {} / {}".format(epoch, correct, len_of_test))
 			else:
 				print("Epoch {} completed".format(epoch))
 
 		# Best Accuracy of the Model
 		if test_set:
+			self.biases = max_biases
+			self.weights = max_weights
 			print("The Best Accuracy of the model is {}%.".format(max_correct / len_of_test * 100))
 
 
@@ -195,8 +203,3 @@ def sigmoid(z):
 # Derivative of Sigmoid Function
 def derivative_of_sigmoid(z):
 	return sigmoid(z) * (1 - sigmoid(z))
-
-
-
-
-

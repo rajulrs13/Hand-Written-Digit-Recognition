@@ -13,7 +13,7 @@
 
 	"Load and Split the data into training and test sets"
 	```
-	>> training_data, validation_data, test_data = data_set_loader.load_data_wrapper()
+	>> training_data, validation_data, test_data = dataset_loader.load_data_wrapper()
 	```
 	
 	"Import the main file containing NeuralNet class"
