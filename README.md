@@ -4,7 +4,7 @@ This project is made in Python 3 using a simple feed-forward neural network. The
 
 This project does not use libraries like tensorflow , keras etc. It only uses numpy as a non-standard library and is made solely using mathematical equations. Every effort is made to drop in-line comments to for easy understanding.
 
-To see it in action, a guide [Steps To Follow](Instructions.md) is also included.
+To see it in action, a guide [Steps To Follow](Instructions.md) is also included. Also a quick demo can be seen by executing [this](default_implementation.py) file.
 
 ---
 #### References
