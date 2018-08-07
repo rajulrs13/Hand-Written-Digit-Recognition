@@ -35,4 +35,4 @@
 
 Feel free to play around with the parameters of the train function above.
 
-Changing the structure of the neural network is also possible by increasing or decreasing the number of neurons in the hidden layer and also the number of hidden layers too, by changing parameters while creating a NeuralNet instance/ objects.
+Changing the structure of the neural network is also possible by increasing or decreasing the number of neurons in the hidden layer and also the number of hidden layers too, by changing parameters while creating a NeuralNet instance/ object.
