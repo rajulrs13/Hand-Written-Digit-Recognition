@@ -8,7 +8,7 @@
 5. Check for the version of python. As this is a python 3 code, it won't work on earlier versions (python 2.x.x).
 6. Now type these commands one by one in the terminal.
 	```
-	>> import data_set_loader
+	>> import dataset_loader
 	```
 
 	"Load and Split the data into training and test sets"
